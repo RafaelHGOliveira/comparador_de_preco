@@ -7,6 +7,7 @@ def scrape_terabyteshop(query):
 
     options = webdriver.ChromeOptions()
     # options.add_argument("--headless=new")
+    options.add_argument('--disable-gpu')
 
     # Automatically install the correct version of ChromeDriver
     chromedriver_autoinstaller.install()
@@ -19,7 +20,13 @@ def scrape_terabyteshop(query):
         driver.get(f'https://www.terabyteshop.com.br/busca?str={query}')
 
         # Wait until the elements are present
-        driver.implicitly_wait(5)
+        driver.implicitly_wait(10)
+
+        try:
+            click = driver.find_element(By.XPATH, '//*[@id="pdmore"]')
+            click.click()
+        except:
+            None
 
         # Locate all specified elements
         elements = driver.find_elements(By.XPATH, '//*[@id="prodarea"]/div')
@@ -40,6 +47,7 @@ def scrape_terabyteshop(query):
     finally:
         # Close the browser
         driver.quit()
+        print('Terabyteshop complete!')
 
     return results
 

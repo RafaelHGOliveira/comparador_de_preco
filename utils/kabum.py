@@ -7,6 +7,7 @@ def scrape_kabum(query):
 
     options = webdriver.ChromeOptions()
     options.add_argument("--headless=new")
+    options.add_argument('--disable-gpu')
 
     # Automatically install the correct version of ChromeDriver
     chromedriver_autoinstaller.install()
@@ -16,10 +17,11 @@ def scrape_kabum(query):
 
     try:
         # Access the link
-        driver.get(f'https://www.kabum.com.br/busca/{query}')
+        driver.get(
+            f'https://www.kabum.com.br/busca/{query}?page_number=1&page_size=100')
 
         # Wait until the elements are present
-        driver.implicitly_wait(5)
+        driver.implicitly_wait(10)
 
         # Locate all specified elements
         elements = driver.find_elements(
@@ -41,6 +43,7 @@ def scrape_kabum(query):
     finally:
         # Close the browser
         driver.quit()
+        print('Kabum complete!')
 
     return results
 
