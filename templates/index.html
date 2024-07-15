@@ -1,12 +1,41 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="pt-br">
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Flowbite Flask</title>
+    <title>Comparador de Preços</title>
+    <link
+      rel="stylesheet"
+      href="{{url_for('static',filename='dist/css/output.css')}}"
+    />
   </head>
-  <body>
-    <h1>Hello, Flask!</h1>
+  <body class="bg-zinc-800 text-zinc-100">
+    <div
+      class="container m-4 flex h-screen w-screen items-center justify-center gap-2 align-middle"
+    >
+      <label for="search">Busca: </label>
+      <input class="text-zinc-800" type="text" />
+      <button
+        type="button"
+        class="rounded-lg border border-zinc-200 bg-zinc-800 px-4 py-2 text-zinc-200 hover:bg-zinc-200 hover:text-zinc-800"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="lucide lucide-search"
+        >
+          <circle cx="11" cy="11" r="8" />
+          <path d="m21 21-4.3-4.3" />
+        </svg>
+      </button>
+    </div>
   </body>
 </html>
