@@ -4,9 +4,13 @@ import chromedriver_autoinstaller
 
 
 def scrape_terabyteshop(query):
+
+    options = webdriver.ChromeOptions()
+    # options.add_argument("--headless=new")
+
     # Automatically install the correct version of ChromeDriver
     chromedriver_autoinstaller.install()
-    driver = webdriver.Chrome()
+    driver = webdriver.Chrome(options)
 
     results = []
 
@@ -15,7 +19,7 @@ def scrape_terabyteshop(query):
         driver.get(f'https://www.terabyteshop.com.br/busca?str={query}')
 
         # Wait until the elements are present
-        driver.implicitly_wait(10)
+        driver.implicitly_wait(5)
 
         # Locate all specified elements
         elements = driver.find_elements(By.XPATH, '//*[@id="prodarea"]/div')
@@ -27,9 +31,9 @@ def scrape_terabyteshop(query):
                 item = {
                     'title': element.find_element(By.TAG_NAME, 'h2').text,
                     'price': element.find_element(By.CLASS_NAME, 'prod-new-price').find_element(By.TAG_NAME, 'span').text,
-                    'payment_method': element.find_element(By.CLASS_NAME, 'prod-new-price').find_element(By.TAG_NAME, 'small').text,
                     'link': element.find_element(By.TAG_NAME, 'a').get_attribute('href'),
-                    'image_link': element.find_element(By.TAG_NAME, 'img').get_attribute('src')
+                    'image_link': element.find_element(By.TAG_NAME, 'img').get_attribute('src'),
+                    'store': 'https://img.terabyteshop.com.br/terabyte-logo.svg',
                 }
                 results.append(item)
 
@@ -47,7 +51,6 @@ if __name__ == "__main__":
         print(f'Element {i}:')
         print('Title:', item['title'])
         print('Price:', item['price'])
-        print('Payment Method:', item['payment_method'])
         print('Link:', item['link'])
         print('Image Link:', item['image_link'])
         print('---')
