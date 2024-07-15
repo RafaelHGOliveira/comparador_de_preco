@@ -7,35 +7,72 @@
     <title>Comparador de Preços</title>
     <link
       rel="stylesheet"
-      href="{{url_for('static',filename='dist/css/output.css')}}"
+      href="{{ url_for('static', filename='dist/css/output.css') }}"
     />
   </head>
   <body class="bg-zinc-800 text-zinc-100">
+    <div class="fixed left-3 top-3 z-auto text-lg font-bold text-blue-700">
+      <a href="{{ url_for('index') }}">Comparador de Preços</a>
+    </div>
     <div
-      class="container m-4 flex h-screen w-screen items-center justify-center gap-2 align-middle"
+      class="flex min-h-screen flex-col items-center justify-center gap-4 align-middle"
     >
-      <label for="search">Busca: </label>
-      <input class="text-zinc-800" type="text" />
-      <button
-        type="button"
-        class="rounded-lg border border-zinc-200 bg-zinc-800 px-4 py-2 text-zinc-200 hover:bg-zinc-200 hover:text-zinc-800"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          class="lucide lucide-search"
+      <form method="post" action="/" class="flex items-center gap-2">
+        <label for="search" class="text-lg">Busca: </label>
+        <input
+          name="query"
+          class="rounded px-2 py-1 text-zinc-800"
+          type="text"
+          value="{{ query }}"
+          required
+        />
+        <button
+          type="submit"
+          class="rounded-lg border border-zinc-200 bg-zinc-800 px-4 py-2 text-zinc-200 hover:bg-zinc-200 hover:text-zinc-800"
         >
-          <circle cx="11" cy="11" r="8" />
-          <path d="m21 21-4.3-4.3" />
-        </svg>
-      </button>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="lucide lucide-search"
+          >
+            <circle cx="11" cy="11" r="8" />
+            <path d="m21 21-4.3-4.3" />
+          </svg>
+        </button>
+      </form>
+
+      {% if products %}
+      <div class="m-4 flex w-screen flex-wrap justify-center gap-4">
+        {% for item in products %}
+        <div
+          class="h-80 w-80 items-center justify-center rounded border bg-zinc-700 p-4 align-middle shadow-md"
+        >
+          <div class="flex items-center justify-between">
+            <img
+              src="{{ item.image_link }}"
+              alt="{{ item.title }}"
+              class="h-40"
+            />
+            <img src="{{ item.store }}" alt="Logo da Loja" class="h-8" />
+          </div>
+          <h3 class="text-base font-semibold">{{ item.title }}</h3>
+          <div class="flex">
+            <p class="font-bold">Preço:</p>
+            <p>{{ item.price }}</p>
+          </div>
+          <a href="{{ item.link }}" class="text-blue-500"> Link do Produto </a>
+          <br />
+        </div>
+        {% endfor %}
+      </div>
+      {% endif %}
     </div>
   </body>
 </html>
