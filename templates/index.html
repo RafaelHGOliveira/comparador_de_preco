@@ -10,12 +10,12 @@
       href="{{ url_for('static', filename='dist/css/output.css') }}"
     />
   </head>
-  <body class="bg-zinc-800 text-zinc-100">
-    <div class="fixed left-3 top-3 z-auto text-lg font-bold text-blue-700">
-      <a href="{{ url_for('index') }}">Comparador de Preços</a>
+  <body class="bg-zinc-800 text-sm text-zinc-200">
+    <div class="left-3 top-3 z-auto text-xl font-bold text-blue-700">
+      <a href="{{ url_for('index') }}"> Comparador de Preços </a>
     </div>
     <div
-      class="flex min-h-screen flex-col items-center justify-center gap-4 align-middle"
+      class="flex min-h-screen w-screen flex-col items-center justify-center gap-2 align-middle"
     >
       <form method="post" action="/" class="flex items-center gap-2">
         <label for="search" class="text-lg">Busca: </label>
@@ -49,27 +49,35 @@
       </form>
 
       {% if products %}
-      <div class="m-4 flex w-screen flex-wrap justify-center gap-4">
+      <div
+        class="my-4 flex flex-wrap items-center justify-center gap-4 align-middle"
+      >
         {% for item in products %}
-        <div
-          class="h-80 w-80 items-center justify-center rounded border bg-zinc-700 p-4 align-middle shadow-md"
+        <a
+          href="{{ item.link }}"
+          target="_blank"
+          class="flex h-72 w-72 flex-col justify-between rounded border bg-zinc-700 p-4 align-middle shadow-md hover:bg-zinc-600"
         >
-          <div class="flex items-center justify-between">
-            <img
-              src="{{ item.image_link }}"
-              alt="{{ item.title }}"
-              class="h-40"
-            />
-            <img src="{{ item.store }}" alt="Logo da Loja" class="h-8" />
+          <div>
+            <div class="flex items-center justify-between">
+              <img
+                src="{{ item.image_link }}"
+                alt="{{ item.title }}"
+                class="w-40"
+              />
+              <img
+                src="{{ item.store }}"
+                alt="Logo da Loja"
+                class="mx-auto w-24"
+              />
+            </div>
+            <h3 class="font-semibold">{{ item.title }}</h3>
+            <div class="flex gap-2">
+              <p class="font-bold">Preço:</p>
+              <p>{{ item.price }}</p>
+            </div>
           </div>
-          <h3 class="text-base font-semibold">{{ item.title }}</h3>
-          <div class="flex">
-            <p class="font-bold">Preço:</p>
-            <p>{{ item.price }}</p>
-          </div>
-          <a href="{{ item.link }}" class="text-blue-500"> Link do Produto </a>
-          <br />
-        </div>
+        </a>
         {% endfor %}
       </div>
       {% endif %}

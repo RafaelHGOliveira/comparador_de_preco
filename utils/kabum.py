@@ -21,7 +21,7 @@ def scrape_kabum(query):
             f'https://www.kabum.com.br/busca/{query}?page_number=1&page_size=100')
 
         # Wait until the elements are present
-        driver.implicitly_wait(10)
+        driver.implicitly_wait(5)
 
         # Locate all specified elements
         elements = driver.find_elements(
